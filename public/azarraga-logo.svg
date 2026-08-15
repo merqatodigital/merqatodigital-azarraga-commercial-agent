@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 180" role="img" aria-labelledby="title desc">
+<title id="title">Azarraga Glass &amp; Aluminum</title><desc id="desc">Azarraga architectural crown and building mark with company wordmark</desc>
+<g fill="#173f68">
+<path d="M380 8l8 25-8 15-8-15z"/><path d="M356 20l15 12 4 23-18-13zM404 20l-15 12-4 23 18-13z"/><path d="M339 31l15 7 2 24-17-12zM421 31l-15 7-2 24 17-12z"/>
+<path d="M337 55h86v7h-86z"/><path d="M380 65L270 117h220zm0 15L294 121h172zm0 15l-63 30h126zm0 15l-39 19h78z"/>
+<text x="380" y="153" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" letter-spacing="18">AZARRAGA</text>
+<rect x="205" y="160" width="350" height="18" rx="1"/><text x="380" y="174" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="7">GLASS &amp; ALUMINUM</text>
+</g></svg>
