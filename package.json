@@ -1,17 +1,22 @@
 {
   "name": "azarraga-commercial-agent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "vitest run"
   },
   "dependencies": {
     "next": "15.5.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "lucide-react": "^0.468.0"
+    "lucide-react": "^0.468.0",
+    "zod": "^3.24.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7"
+  }
 }
