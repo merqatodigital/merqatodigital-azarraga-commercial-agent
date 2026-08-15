@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main, feature/icm-backend-foundation]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Prepare Lovable package
+        run: |
+          mkdir -p lovable-package
+          rsync -a --exclude='.git' --exclude='.next' --exclude='node_modules' --exclude='lovable-package' ./ lovable-package/
+          cat > lovable-package/.env.example <<'EOF'
+          OPENROUTER_API_KEY=replace_with_openrouter_key
+          NEXT_PUBLIC_APP_URL=http://localhost:3000
+          EOF
+      - name: Upload Lovable-ready source
+        uses: actions/upload-artifact@v4
+        with:
+          name: azarraga-commercial-agent-lovable
+          path: lovable-package
+          if-no-files-found: error
+          retention-days: 14

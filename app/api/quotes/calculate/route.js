@@ -1,10 +1,13 @@
-const n=v=>Number(v||0)
+import {quoteTotals,toCentavos,fromCentavos} from '../../../../lib/quote-engine'
+
 export async function POST(req){
- const body=await req.json(); const items=Array.isArray(body.items)?body.items:[]
- const lines=items.map(x=>({...x,subtotal:Math.round(n(x.qty)*n(x.unit)*100)/100}))
- const subtotal=lines.reduce((s,x)=>s+x.subtotal,0)
- const logistics=n(body.logistics); const installation=n(body.installation); const vat=n(body.vat); const discount=n(body.discount)
- const total=Math.round((subtotal+logistics+installation+vat-discount)*100)/100
- if(total<0)return Response.json({error:'Quote total cannot be negative'},{status:400})
- return Response.json({lines,subtotal,logistics,installation,vat,discount,total,currency:'PHP',calculation:'deterministic'})
+ const body=await req.json()
+ const items=Array.isArray(body.items)?body.items:[]
+ const normalized=items.map(x=>({...x,unitPrice:x.unitPrice??x.unit??0}))
+ const base=quoteTotals(normalized,body.logistics,body.discount)
+ const installationCentavos=toCentavos(body.installation)
+ const vatCentavos=toCentavos(body.vat)
+ const totalCentavos=base.totalCentavos+installationCentavos+vatCentavos
+ if(totalCentavos<0)return Response.json({error:'Quote total cannot be negative'},{status:400})
+ return Response.json({...base,lines:base.items.map(x=>({...x,subtotal:x.amount,subtotalCentavos:x.amountCentavos})),installation:fromCentavos(installationCentavos),installationCentavos,vat:fromCentavos(vatCentavos),vatCentavos,total:fromCentavos(totalCentavos),totalCentavos,currency:'PHP',calculation:'deterministic-centavos'})
 }
