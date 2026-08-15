@@ -1,0 +1,6 @@
+[
+ {"id":"glass-6-bronze-annealed","thickness_mm":6,"treatment":"annealed","color":"bronze","historical_evidence":true,"default_for_products":false},
+ {"id":"glass-10-tempered-clear","thickness_mm":10,"treatment":"tempered","finish":"clear","historical_evidence":true,"default_for_products":false},
+ {"id":"glass-10-tempered-frosted","thickness_mm":10,"treatment":"tempered","finish":"frosted","historical_evidence":true,"default_for_products":false},
+ {"id":"glass-12-tempered-clear","thickness_mm":12,"treatment":"tempered","finish":"clear","historical_evidence":true,"default_for_products":false}
+]
