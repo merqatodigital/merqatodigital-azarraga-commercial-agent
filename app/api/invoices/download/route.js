@@ -1,32 +1,35 @@
 import {NextResponse} from 'next/server'
-import {store} from '../../../../lib/commercial-store'
+import {store} from '../../../lib/commercial-store'
 
-function escapeCsv(v){
-  const s=String(v==null?'':v)
-  if(s.includes(',')||s.includes('"')||s.includes('\n')) return `"${s.replace(/"/g,'""')}"`
-  return s
+function escapeCsv(value){
+  const str = String(value ?? '')
+  if(str.includes(',') || str.includes('"') || str.includes('\n')){
+    return `"${str.replace(/"/g, '""')}"`
+  }
+  return str
 }
 
 export async function GET(){
-  const rows=store.invoices.map(inv=>[
-    inv.id,
-    inv.customer||'',
-    inv.project||'',
-    inv.quote||'',
-    inv.poNumber||'',
-    inv.status||'DRAFT',
-    (inv.totalCentavos||0)/100,
-    (inv.paidCentavos||0)/100,
-    (inv.totalCentavos||0)-(inv.paidCentavos||0),
-    inv.createdAt||''
-  ])
-  const header=['Invoice ID','Customer','Project','Quote','PO Number','Status','Total (PHP)','Paid (PHP)','Balance (PHP)','Created']
-  const csv=[header.map(escapeCsv).join(','),...rows.map(r=>r.map(escapeCsv).join(','))].join('\n')
-  return new NextResponse(csv,{
-    headers:{
-      'Content-Type':'text/csv;charset=utf-8',
-      'Content-Disposition':`attachment; filename=azarraga-invoices-${new Date().toISOString().slice(0,10)}.csv`,
-      'Content-Length':Buffer.byteLength(csv).toString()
-    }
+  const headers = new Headers({
+    'Content-Type': 'text/csv',
+    'Content-Disposition': 'attachment; filename=azarraga-invoices.csv'
   })
+  const invoices = Array.isArray(store?.invoices) ? store.invoices : []
+  const lines = []
+  lines.push('Invoice ID,Customer,Project,Quote,PO Number,Status,Total (PHP),Paid (PHP),Balance (PHP),Created')
+  for(const inv of invoices){
+    lines.push([
+      escapeCsv(inv.id),
+      escapeCsv(inv.customer),
+      escapeCsv(inv.project),
+      escapeCsv(inv.quote),
+      escapeCsv(inv.poNumber),
+      escapeCsv(inv.status),
+      inv.totalCentavos ?? 0,
+      inv.paidCentavos ?? 0,
+      (inv.totalCentavos ?? 0) - (inv.paidCentavos ?? 0),
+      inv.createdAt ?? ''
+    ].join(','))
+  }
+  return new NextResponse(lines.join('\n'), {headers, status: 200})
 }
