@@ -1,22 +1,32 @@
 # Azarraga Commercial Agent
 
-Standalone commercial operating system for Azarraga Glass & Aluminum, Palawan, Philippines.
+Commercial operating system for Azarraga Glass & Aluminum, Palawan, Philippines.
 
-## V1 mission
+**Live:** https://azarraga.vercel.app
 
-Turn Azarraga's commercial history and product knowledge into an operational agent focused on three business pain points:
+---
 
-1. Quotes
-2. Invoices
-3. Lead generation
+## What it does
 
-## Scope
+An AI commercial agent — TALA — that handles the three core business pain points:
 
-Service areas: Puerto Princesa, El Nido, San Vicente and projects across Palawan.
+1. **Quotes** — draft, preview, calculate, and issue quotations for glass and aluminum jobs
+2. **Invoices** — track invoices, record payments, follow up on overdue balances
+3. **Lead generation** — capture leads from URLs, manage pipeline, re-engage cold prospects
 
-Core commercial memory includes product systems, glass specifications, configurations, historical jobs, customers, pricing evidence, delivery and installation costs, payment terms, and operational workflow.
+TALA speaks English and Taglish, remembers commercial history, and suggests next actions without being asked.
+
+---
+
+## Service areas
+
+Puerto Princesa, El Nido, San Vicente, and projects across Palawan.
+
+---
 
 ## Product memory
+
+### Systems
 
 - 900 Series sliding systems
 - Pocket sliding systems
@@ -37,26 +47,67 @@ Core commercial memory includes product systems, glass specifications, configura
 - Tabletop / shelves
 - Aquarium
 
-## Known glass specifications
+### Glass specifications
 
 - 6mm bronze annealed
 - 10mm tempered clear
 - 10mm tempered frosted
 - 12mm tempered clear
-- Other historical specifications to be normalized from source documents
+- Other historical specifications normalized from source documents
 
-## Architecture direction
+---
 
-The system will maintain structured commercial memory rather than treating documents as an undifferentiated chat knowledge base. Historical prices are evidence, not automatically current prices. Quote generation must distinguish known facts, calculated values, assumptions, and items requiring human approval.
+## Architecture
 
-## Initial workflow
+Structured commercial memory — not an undifferentiated chat knowledge base.
 
-Lead -> qualification -> project/spec capture -> measurement/site visit -> quote draft -> approval -> customer quote -> accepted job -> invoice -> payment tracking.
+Historical prices are evidence, not automatically current prices. Quote generation distinguishes known facts, calculated values, assumptions, and items requiring human approval.
+
+### Tech stack
+
+- **Frontend:** Next.js 15 (App Router)
+- **API:** Next.js Route Handlers (`/api/*`)
+- **Deployment:** Vercel
+
+### API routes
+
+| Route | Purpose |
+|-------|---------|
+| `GET /api/quotes` | List quotes |
+| `POST /api/quotes` | Create quote |
+| `POST /api/quotes/calculate` | Calculate quote totals |
+| `POST /api/quotes/preview` | Preview quote before sending |
+| `POST /api/quotes/sample` | Sample quote data |
+| `GET /api/leads` | List leads |
+| `POST /api/leads` | Create lead |
+| `GET /api/invoices` | List invoices |
+| `POST /api/invoices` | Create invoice |
+| `GET /api/documents` | List documents |
+| `POST /api/documents` | Upload document |
+| `GET /api/commercial-records` | Commercial memory snapshot |
+| `GET /api/dashboard` | Dashboard data |
+| `GET /api/agent` | Agent endpoint |
+| `GET /api/agent/models` | Available models |
+| `GET /api/quote-evidence` | Pricing evidence trace |
+
+---
+
+## Workflow
+
+Lead → qualification → project/spec capture → measurement/site visit → quote draft → approval → customer quote → accepted job → invoice → payment tracking.
+
+---
+
+## Repository
+
+- **GitHub:** https://github.com/merqatodigital/merqatodigital-azarraga-commercial-agent
+- **Live:** https://azarraga.vercel.app
+- **Source of truth:** GitHub
+
+---
 
 ## Project rules
 
-- This repository is independent from the existing Azarraga website repository.
-- No Hermes dependency.
-- No Lovable dependency.
+- Independent from the existing Azarraga website repository.
 - GitHub is the source of truth.
-- Deployment target: a new standalone Vercel project.
+- Deployment target: Vercel.
