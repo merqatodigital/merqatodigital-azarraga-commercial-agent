@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "azarraga-commercial-agent-worker",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-01-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "AzarragaState",
+        "class_name": "AzarragaState"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["AzarragaState"]
+    }
+  ],
+  "vars": {
+    "NEXT_PUBLIC_APP_URL": "https://azarraga.vercel.app",
+    "OPENROUTER_MODEL": "nvidia/nemotron-nano-9b-v2:free"
+  }
+}
